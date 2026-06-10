@@ -1,0 +1,173 @@
+8.0s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+8.0s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+8.0s 3 0.00s - to python to disable frozen modules.
+8.0s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+8.8s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+8.8s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+8.8s 7 0.00s - to python to disable frozen modules.
+8.8s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+13.2s 9 Loading data...
+13.3s 10 Loading law corpus...
+15.2s 11 Loading court citation IDs...
+15.2s 12 court chunks: 0it [00:00, ?it/s]
+17.3s 13 court chunks: 0it [00:00, ?it/s]court chunks: 1it [00:02,  2.09s/it]
+19.0s 14 court chunks: 1it [00:02,  2.09s/it]court chunks: 2it [00:03,  1.82s/it]
+20.6s 15 court chunks: 2it [00:03,  1.82s/it]court chunks: 3it [00:05,  1.74s/it]
+22.2s 16 court chunks: 3it [00:05,  1.74s/it]court chunks: 4it [00:06,  1.70s/it]
+23.9s 17 court chunks: 4it [00:06,  1.70s/it]court chunks: 5it [00:08,  1.67s/it]
+25.4s 18 court chunks: 5it [00:08,  1.67s/it]court chunks: 6it [00:10,  1.63s/it]
+27.1s 19 court chunks: 6it [00:10,  1.63s/it]court chunks: 7it [00:11,  1.64s/it]
+28.7s 20 court chunks: 7it [00:11,  1.64s/it]court chunks: 8it [00:13,  1.62s/it]
+30.3s 21 court chunks: 8it [00:13,  1.62s/it]court chunks: 9it [00:15,  1.61s/it]
+32.6s 22 court chunks: 9it [00:15,  1.61s/it]court chunks: 10it [00:17,  1.83s/it]
+34.8s 23 court chunks: 10it [00:17,  1.83s/it]court chunks: 11it [00:19,  1.95s/it]
+37.1s 24 court chunks: 11it [00:19,  1.95s/it]court chunks: 12it [00:21,  2.06s/it]
+39.3s 25 court chunks: 12it [00:21,  2.06s/it]court chunks: 13it [00:24,  2.09s/it]
+41.5s 26 court chunks: 13it [00:24,  2.09s/it]court chunks: 14it [00:26,  2.12s/it]
+43.5s 27 court chunks: 14it [00:26,  2.12s/it]court chunks: 15it [00:28,  2.10s/it]
+45.3s 28 court chunks: 15it [00:28,  2.10s/it]court chunks: 16it [00:30,  2.01s/it]
+46.2s 29 court chunks: 16it [00:30,  2.01s/it]court chunks: 17it [00:30,  1.68s/it]
+46.5s 30 court chunks: 17it [00:30,  1.68s/it]court chunks: 17it [00:30,  1.82s/it]
+46.5s 31 Corpus size: 2,161,111
+46.5s 32 court chunks: 17it [00:30,  1.82s/it]
+46.5s 33 
+46.5s 34 
+47.8s 35 Building co-citation graph...
+48.8s 36 Building law indices...
+73.2s 37 Building query TF-IDF matrices...
+81.0s 38 Building law-text TF-IDF matrices...
+147.6s 39 
+147.6s 40 Sweeping NN-copy thresholds on val (LOO)...
+164.1s 41 thresh high=0.8 med=0.6 -> val F1@8 = 0.1667
+180.6s 42 thresh high=0.75 med=0.55 -> val F1@8 = 0.1667
+197.0s 43 thresh high=0.7 med=0.5 -> val F1@8 = 0.1667
+213.4s 44 thresh high=0.65 med=0.5 -> val F1@8 = 0.1667
+229.8s 45 thresh high=0.6 med=0.45 -> val F1@8 = 0.1667
+229.8s 46 Best NN thresholds: high=0.8 med=0.6 (F1@8=0.1667)
+229.8s 47 
+229.8s 48 Validating (full run with best thresholds)...
+229.8s 49 0%|          | 0/10 [00:00<?, ?it/s]
+231.5s 50 0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:01<00:15,  1.73s/it]
+233.2s 51 10%|█         | 1/10 [00:01<00:15,  1.73s/it] 20%|██        | 2/10 [00:03<00:13,  1.69s/it]
+234.9s 52 20%|██        | 2/10 [00:03<00:13,  1.69s/it] 30%|███       | 3/10 [00:05<00:11,  1.67s/it]
+236.5s 53 30%|███       | 3/10 [00:05<00:11,  1.67s/it] 40%|████      | 4/10 [00:06<00:10,  1.67s/it]
+238.3s 54 40%|████      | 4/10 [00:06<00:10,  1.67s/it] 50%|█████     | 5/10 [00:08<00:08,  1.71s/it]
+240.0s 55 50%|█████     | 5/10 [00:08<00:08,  1.71s/it] 60%|██████    | 6/10 [00:10<00:06,  1.71s/it]
+241.7s 56 60%|██████    | 6/10 [00:10<00:06,  1.71s/it] 70%|███████   | 7/10 [00:11<00:05,  1.69s/it]
+243.4s 57 70%|███████   | 7/10 [00:11<00:05,  1.69s/it] 80%|████████  | 8/10 [00:13<00:03,  1.69s/it]
+245.1s 58 80%|████████  | 8/10 [00:13<00:03,  1.69s/it] 90%|█████████ | 9/10 [00:15<00:01,  1.70s/it]
+246.8s 59 90%|█████████ | 9/10 [00:15<00:01,  1.70s/it]100%|██████████| 10/10 [00:16<00:00,  1.70s/it]
+246.8s 60 100%|██████████| 10/10 [00:16<00:00,  1.70s/it]100%|██████████| 10/10 [00:16<00:00,  1.70s/it]
+246.8s 61 
+246.8s 62 Fixed k validation:
+246.8s 63 k= 2 -> 0.0938
+246.8s 64 k= 3 -> 0.1167
+246.8s 65 k= 5 -> 0.1411
+246.8s 66 k= 6 -> 0.1533
+246.8s 67 k= 8 -> 0.1667
+246.8s 68 k=10 -> 0.1793
+246.8s 69 k=12 -> 0.1802
+246.8s 70 k=15 -> 0.1804
+246.8s 71 k=20 -> 0.1712
+246.8s 72 k=25 -> 0.1821
+246.8s 73 k=30 -> 0.1739
+247.0s 74 100%|██████████| 10/10 [00:16<00:00,  1.70s/it]
+247.0s 75 
+247.0s 76 
+247.5s 77 
+247.5s 78 Best fixed k=25 -> 0.1821
+247.5s 79 Adaptive      -> 0.2012
+247.5s 80 Strategy: adaptive
+247.5s 81 
+247.5s 82 Scoring test queries...
+247.5s 83 0%|          | 0/40 [00:00<?, ?it/s]
+249.3s 84 0%|          | 0/40 [00:00<?, ?it/s]  2%|▎         | 1/40 [00:01<01:08,  1.75s/it]
+251.0s 85 2%|▎         | 1/40 [00:01<01:08,  1.75s/it]  5%|▌         | 2/40 [00:03<01:06,  1.76s/it]
+252.8s 86 5%|▌         | 2/40 [00:03<01:06,  1.76s/it]  8%|▊         | 3/40 [00:05<01:05,  1.78s/it]
+254.6s 87 8%|▊         | 3/40 [00:05<01:05,  1.78s/it] 10%|█         | 4/40 [00:07<01:03,  1.75s/it]
+256.3s 88 10%|█         | 4/40 [00:07<01:03,  1.75s/it] 12%|█▎        | 5/40 [00:08<01:01,  1.77s/it]
+258.1s 89 12%|█▎        | 5/40 [00:08<01:01,  1.77s/it] 15%|█▌        | 6/40 [00:10<00:59,  1.75s/it]
+259.9s 90 15%|█▌        | 6/40 [00:10<00:59,  1.75s/it] 18%|█▊        | 7/40 [00:12<00:58,  1.77s/it]
+261.7s 91 18%|█▊        | 7/40 [00:12<00:58,  1.77s/it] 20%|██        | 8/40 [00:14<00:57,  1.78s/it]
+263.5s 92 20%|██        | 8/40 [00:14<00:57,  1.78s/it] 22%|██▎       | 9/40 [00:15<00:55,  1.78s/it]
+265.1s 93 22%|██▎       | 9/40 [00:15<00:55,  1.78s/it] 25%|██▌       | 10/40 [00:17<00:52,  1.75s/it]
+266.9s 94 25%|██▌       | 10/40 [00:17<00:52,  1.75s/it] 28%|██▊       | 11/40 [00:19<00:50,  1.74s/it]
+268.6s 95 28%|██▊       | 11/40 [00:19<00:50,  1.74s/it] 30%|███       | 12/40 [00:21<00:49,  1.75s/it]
+270.4s 96 30%|███       | 12/40 [00:21<00:49,  1.75s/it] 32%|███▎      | 13/40 [00:22<00:47,  1.75s/it]
+272.1s 97 32%|███▎      | 13/40 [00:22<00:47,  1.75s/it] 35%|███▌      | 14/40 [00:24<00:45,  1.74s/it]
+273.9s 98 35%|███▌      | 14/40 [00:24<00:45,  1.74s/it] 38%|███▊      | 15/40 [00:26<00:43,  1.75s/it]
+275.7s 99 38%|███▊      | 15/40 [00:26<00:43,  1.75s/it] 40%|████      | 16/40 [00:28<00:42,  1.76s/it]
+277.4s 100 40%|████      | 16/40 [00:28<00:42,  1.76s/it] 42%|████▎     | 17/40 [00:29<00:40,  1.76s/it]
+279.1s 101 42%|████▎     | 17/40 [00:29<00:40,  1.76s/it] 45%|████▌     | 18/40 [00:31<00:38,  1.74s/it]
+280.9s 102 45%|████▌     | 18/40 [00:31<00:38,  1.74s/it] 48%|████▊     | 19/40 [00:33<00:36,  1.75s/it]
+282.7s 103 48%|████▊     | 19/40 [00:33<00:36,  1.75s/it] 50%|█████     | 20/40 [00:35<00:35,  1.77s/it]
+284.4s 104 50%|█████     | 20/40 [00:35<00:35,  1.77s/it] 52%|█████▎    | 21/40 [00:36<00:33,  1.76s/it]
+286.2s 105 52%|█████▎    | 21/40 [00:36<00:33,  1.76s/it] 55%|█████▌    | 22/40 [00:38<00:31,  1.75s/it]
+287.9s 106 55%|█████▌    | 22/40 [00:38<00:31,  1.75s/it] 57%|█████▊    | 23/40 [00:40<00:29,  1.73s/it]
+289.6s 107 57%|█████▊    | 23/40 [00:40<00:29,  1.73s/it] 60%|██████    | 24/40 [00:42<00:27,  1.74s/it]
+291.4s 108 60%|██████    | 24/40 [00:42<00:27,  1.74s/it] 62%|██████▎   | 25/40 [00:43<00:26,  1.76s/it]
+293.2s 109 62%|██████▎   | 25/40 [00:43<00:26,  1.76s/it] 65%|██████▌   | 26/40 [00:45<00:24,  1.76s/it]
+294.9s 110 65%|██████▌   | 26/40 [00:45<00:24,  1.76s/it] 68%|██████▊   | 27/40 [00:47<00:22,  1.74s/it]
+296.6s 111 68%|██████▊   | 27/40 [00:47<00:22,  1.74s/it] 70%|███████   | 28/40 [00:49<00:20,  1.73s/it]
+298.3s 112 70%|███████   | 28/40 [00:49<00:20,  1.73s/it] 72%|███████▎  | 29/40 [00:50<00:19,  1.74s/it]
+300.1s 113 72%|███████▎  | 29/40 [00:50<00:19,  1.74s/it] 75%|███████▌  | 30/40 [00:52<00:17,  1.74s/it]
+301.8s 114 75%|███████▌  | 30/40 [00:52<00:17,  1.74s/it] 78%|███████▊  | 31/40 [00:54<00:15,  1.74s/it]
+303.6s 115 78%|███████▊  | 31/40 [00:54<00:15,  1.74s/it] 80%|████████  | 32/40 [00:56<00:13,  1.74s/it]
+305.2s 116 80%|████████  | 32/40 [00:56<00:13,  1.74s/it] 82%|████████▎ | 33/40 [00:57<00:12,  1.72s/it]
+306.9s 117 82%|████████▎ | 33/40 [00:57<00:12,  1.72s/it] 85%|████████▌ | 34/40 [00:59<00:10,  1.71s/it]
+308.6s 118 85%|████████▌ | 34/40 [00:59<00:10,  1.71s/it] 88%|████████▊ | 35/40 [01:01<00:08,  1.69s/it]
+310.2s 119 88%|████████▊ | 35/40 [01:01<00:08,  1.69s/it] 90%|█████████ | 36/40 [01:02<00:06,  1.69s/it]
+311.9s 120 90%|█████████ | 36/40 [01:02<00:06,  1.69s/it] 92%|█████████▎| 37/40 [01:04<00:05,  1.69s/it]
+313.7s 121 92%|█████████▎| 37/40 [01:04<00:05,  1.69s/it] 95%|█████████▌| 38/40 [01:06<00:03,  1.70s/it]
+315.4s 122 95%|█████████▌| 38/40 [01:06<00:03,  1.70s/it] 98%|█████████▊| 39/40 [01:07<00:01,  1.71s/it]
+317.1s 123 98%|█████████▊| 39/40 [01:07<00:01,  1.71s/it]100%|██████████| 40/40 [01:09<00:00,  1.71s/it]
+317.1s 124 100%|██████████| 40/40 [01:09<00:00,  1.71s/it]100%|██████████| 40/40 [01:09<00:00,  1.74s/it]
+317.3s 125 100%|██████████| 40/40 [01:09<00:00,  1.74s/it]
+317.3s 126 
+317.3s 127 
+319.7s 128 Saved /kaggle/working/submission_adaptive.csv
+319.7s 129 Saved /kaggle/working/submission_k5.csv
+319.7s 130 Saved /kaggle/working/submission_k8.csv
+319.7s 131 Saved /kaggle/working/submission_k10.csv
+319.7s 132 Saved /kaggle/working/submission_k12.csv
+319.9s 133 
+319.9s 134 ================================================================================
+319.9s 135 SUMMARY
+319.9s 136 Selected strategy       : adaptive (val F1=0.2012)
+320.0s 137 Best fixed val F1       : k=25 -> 0.1821
+320.0s 138 Adaptive val F1         : 0.2012
+320.0s 139 NN thresh sweep best F1 : 0.1667 (high=0.8, med=0.6)
+320.0s 140 submission.csv          : /kaggle/working/submission.csv
+320.0s 141 ================================================================================
+320.0s 142 
+320.0s 143 Files created:
+320.0s 144 /kaggle/working/submission.csv
+320.0s 145 /kaggle/working/submission_adaptive.csv
+320.0s 146 /kaggle/working/submission_k5.csv
+320.0s 147 /kaggle/working/submission_k8.csv
+320.0s 148 /kaggle/working/submission_k10.csv
+320.0s 149 /kaggle/working/submission_k12.csv
+320.0s 150 /kaggle/working/review_pack.csv
+320.0s 151 /kaggle/working/candidate_long.csv
+320.0s 152 /kaggle/working/manual_overrides_template.csv
+320.0s 153 
+320.0s 154 First 10 rows of submission.csv:
+320.0s 155 query_id                                                                                                                                                                                                                                                                                                                                                            predicted_citations
+320.0s 156 test_001 Art. 963 Abs. 1 ZGB;Art. 8 ZGB;Art. 10 Abs. 2 URG;Art. 655 Abs. 2 ZGB;Art. 965 Abs. 3 ZGB;Art. 2 Abs. 2 URG;Art. 527 ZGB;Art. 965 Abs. 2 ZGB;Art. 1 UWG;Art. 2 Abs. 1 URG;Art. 17 IPRG;Art. 2 UWG;Art. 5 UWG;Art. 18 IPRG;Art. 241 Abs. 3 ZGB;Art. 946 Abs. 1 ZGB;Art. 969 Abs. 1 ZGB;Art. 12 ZPO;Art. 198 ZPO;Art. 320 ZPO;Art. 2 Abs. 2 ZGB;Art. 641 Abs. 2 ZGB;Art. 471 ZGB
+320.0s 157 test_002                                                                                                                                                                                                 Art. 59 Abs. 1 SVG;Art. 83 Abs. 1 SVG;Art. 83 Abs. 2 SVG;Art. 59 Abs. 2 SVG;Art. 59 Abs. 3 SVG;Art. 59 Abs. 4 SVG;Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 83 Abs. 1 SchKG
+320.0s 158 test_003                                                                                                                                                                                                                                                                               Art. 20 Abs. 2 OR;Art. 267a Abs. 1 OR;Art. 267a Abs. 2 OR;Art. 267a Abs. 3 OR;Art. 659 Abs. 2 OR
+320.0s 159 test_004                                                                                                         Art. 166 Abs. 2 SchKG;Art. 166 Abs. 1 SchKG;Art. 100 Abs. 1 BGG;BGE 131 III 601 E. 3.1;Art. 166 Abs. 2 ZPO;BGE 132 III 449 E. 2;BGE 128 III 76 E. 1b;BGE 127 III 147 E. 2c;BGE 134 III 151 E. 2.4;BGE 134 III 151 E. 2.5;BGE 146 III 326 E. 5.2;BGE 146 III 326 E. 6.1
+320.0s 160 test_005                                                                                                                                                                                                                                                                                                                      Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR
+320.0s 161 test_006                                                                                                                                                                                                                                                                              Art. 4 Abs. 2 PrHG;Art. 4 Abs. 1 PrHG;Art. 5 Abs. 2 PrHG;Art. 5 Abs. 1bis PrHG;Art. 5 Abs. 1 PrHG
+320.0s 162 test_007                                                                                                                                                                                                                                                                                                                      Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR
+320.0s 163 test_008                                                                                                                                                                                                                                                                                                                      Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR
+320.0s 164 test_009                                                                                                                                                                                                                                                                                                                      Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR
+320.0s 165 test_010                                                                                                                                Art. 398 Abs. 2 StPO;Art. 398 Abs. 3 StPO;Art. 398 Abs. 5 StPO;Art. 398 Abs. 1 StPO;Art. 398 Abs. 4 StPO;Art. 221 Abs. 1 StPO;Art. 12 Abs. 2 StGB;Art. 221 Abs. 2 StPO;Art. 42 Abs. 1 StGB;Art. 25 StGB;Art. 64 Abs. 1 StGB;Art. 22 Abs. 1 StGB
+324.5s 166 /usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+324.5s 167 cells[i][c] = re.sub('\\\\\|', '|', cell)
+324.7s 168 /usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+324.7s 169 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+325.5s 170 [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+325.9s 171 [NbConvertApp] Writing 71503 bytes to __notebook__.ipynb
+329.2s 172 [NbConvertApp] Converting notebook __notebook__.ipynb to html
+330.5s 173 [NbConvertApp] Writing 542000 bytes to __results__.html

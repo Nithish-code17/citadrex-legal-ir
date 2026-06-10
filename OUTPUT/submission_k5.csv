@@ -1,0 +1,41 @@
+query_id,predicted_citations
+test_001,Art. 963 Abs. 1 ZGB;Art. 8 ZGB;Art. 10 Abs. 2 URG;Art. 655 Abs. 2 ZGB;Art. 965 Abs. 3 ZGB
+test_002,Art. 59 Abs. 1 SVG;Art. 83 Abs. 1 SVG;Art. 83 Abs. 2 SVG;Art. 59 Abs. 2 SVG;Art. 59 Abs. 3 SVG
+test_003,Art. 20 Abs. 2 OR;Art. 267a Abs. 1 OR;Art. 267a Abs. 2 OR;Art. 267a Abs. 3 OR;Art. 659 Abs. 2 OR
+test_004,Art. 166 Abs. 2 SchKG;Art. 166 Abs. 1 SchKG;Art. 100 Abs. 1 BGG;BGE 131 III 601 E. 3.1;Art. 166 Abs. 2 ZPO
+test_005,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_006,Art. 4 Abs. 2 PrHG;Art. 4 Abs. 1 PrHG;Art. 5 Abs. 2 PrHG;Art. 5 Abs. 1bis PrHG;Art. 5 Abs. 1 PrHG
+test_007,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_008,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_009,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 3 Abs. 2 BankG
+test_010,Art. 398 Abs. 2 StPO;Art. 398 Abs. 3 StPO;Art. 398 Abs. 5 StPO;Art. 398 Abs. 1 StPO;Art. 398 Abs. 4 StPO
+test_011,Art. 20 Abs. 2 OR;Art. 38 Abs. 3 IPRG;Art. 12 OR;Art. 38 Abs. 1 OR;Art. 38 Abs. 2 OR
+test_012,Art. 20 Abs. 2 OR;Art. 400 Abs. 1 OR;Art. 400 Abs. 2 OR;Art. 659 Abs. 2 OR;Art. 41 Abs. 1 OR
+test_013,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_014,Art. 100 Abs. 1 BGG;Art. 4 Abs. 2 UVG;Art. 4 Abs. 1 UVG;Art. 6 ATSG;Art. 6 Abs. 1 UVG
+test_015,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 3 Abs. 2 BankG
+test_016,Art. 20 Abs. 1 DBG;Art. 16 Abs. 3 DBG;Art. 4 Abs. 1 VStG;Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG
+test_017,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 3 Abs. 2 BankG
+test_018,Art. 10 Abs. 2 BV;Art. 100 Abs. 1 BGG;Art. 13 Abs. 1 BV;Art. 10 Abs. 1 BV;Art. 10 Abs. 3 BV
+test_019,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_020,Art. 20 Abs. 1 DBG;Art. 4 Abs. 1 VStG;Art. 16 Abs. 3 DBG;Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG
+test_021,Art. 20 Abs. 2 OR;Art. 659 Abs. 2 OR;Art. 41 Abs. 1 OR;Art. 23 OR;Art. 24 Abs. 1 OR
+test_022,Art. 46 IPRG;Art. 10 IPRG;Art. 25 IPRG;Art. 63 Abs. 2 IPRG;Art. 49 IPRG
+test_023,Art. 100 Abs. 1 BGG;Art. 52 Abs. 1 AHVG;Art. 93 Abs. 1 BGG;Art. 74 Abs. 1 BGG;Art. 52 BGG
+test_024,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_025,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_026,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_027,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 8 ZGB;Art. 655 Abs. 2 ZGB;Art. 965 Abs. 3 ZGB
+test_028,Art. 20 Abs. 2 OR;Art. 58 Abs. 1 OR;Art. 41 Abs. 1 OR;Art. 24 Abs. 1 OR;Art. 659 Abs. 2 OR
+test_029,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 3 Abs. 2 BankG
+test_030,Art. 963 Abs. 1 ZGB;Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_031,Art. 963 Abs. 1 ZGB;Art. 125 Abs. 1 ZGB;Art. 125 Abs. 2 ZGB;Art. 8 ZGB;Art. 655 Abs. 2 ZGB
+test_032,Art. 8 Abs. 2 BV;Art. 963 Abs. 1 ZGB;Art. 10 Abs. 2 BV;Art. 100 Abs. 1 BGG;Art. 13 Abs. 1 BV
+test_033,Art. 106 Abs. 2 BGG;Art. 74 Abs. 2 BGG;Art. 100 Abs. 1 BGG;Art. 82 BGG;Art. 89 Abs. 1 BGG
+test_034,Art. 963 Abs. 1 ZGB;Art. 839 Abs. 2 ZGB;Art. 839 Abs. 3 ZGB;Art. 946 Abs. 1 ZGB;Art. 8 ZGB
+test_035,Art. 89 Abs. 3 ZPO;Art. 89 Abs. 1 ZPO;Art. 89 Abs. 2 ZPO;Art. 263 ZPO;Art. 89 IPRG
+test_036,Art. 255 Abs. 2 StPO;Art. 255 Abs. 1 StPO;Art. 197 Abs. 1 StPO;Art. 101 Abs. 1 StPO;Art. 221 Abs. 1 StPO
+test_037,Art. 4 UWG;Art. 6 UWG;Art. 9 Abs. 2 UWG;Art. 9 Abs. 3 UWG;Art. 2 MSchG
+test_038,Art. 100 Abs. 1 BGG;Art. 20 Abs. 2 OR;Art. 659 Abs. 2 OR;Art. 17 IPRG;Art. 74 Abs. 1 BGG
+test_039,Art. 8 Abs. 2 BV;Art. 963 Abs. 1 ZGB;Art. 10 Abs. 2 BV;Art. 100 Abs. 1 BGG;Art. 13 Abs. 1 BV
+test_040,Art. 963 Abs. 1 ZGB;Art. 8 ZGB;Art. 655 Abs. 2 ZGB;Art. 965 Abs. 3 ZGB;Art. 527 ZGB
