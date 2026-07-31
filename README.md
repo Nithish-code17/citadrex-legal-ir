@@ -1,610 +1,650 @@
 <div align="center">
 
-# PCB LOCAL INSPECTION SYSTEM
+⚖️ CITADREX
 
-### Reference-Based Visual Defect Inspection Using Classical Computer Vision
+Citation-Aware Legal Information Retrieval
 
-**A local Python inspection prototype for detecting visible PCB abnormalities through image alignment, reference comparison, and rule-based defect analysis.**
+An experimental retrieval pipeline for mapping complex legal questions to relevant Swiss statutes, court decisions, and legal references.
 
 <p>
-  <img src="https://img.shields.io/badge/System-PCB%20Visual%20Inspection-1F2937?style=for-the-badge" alt="PCB Inspection" />
-  <img src="https://img.shields.io/badge/Processing-Local-166534?style=for-the-badge" alt="Local Processing" />
-  <img src="https://img.shields.io/badge/Computer%20Vision-OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" alt="OpenCV" />
-  <img src="https://img.shields.io/badge/Method-Classical%20Vision-B45309?style=for-the-badge" alt="Classical Vision" />
+  <img src="https://img.shields.io/badge/Domain-Legal%20Information%20Retrieval-1F2937?style=for-the-badge" alt="Legal Information Retrieval" />
+  <img src="https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Approach-TF--IDF%20%2B%20Co--citation-7C3AED?style=for-the-badge" alt="TF-IDF and Co-citation" />
+  <img src="https://img.shields.io/badge/Status-Experimental-D97706?style=for-the-badge" alt="Experimental" />
 </p>
 
+Overview •Retrieval Task •Pipeline •Results •Repository •Limitations
+
 </div>
 
----
+📌 Overview
 
-## 1. Project Overview
+CITADREX is an experimental legal information-retrieval project designed to predict relevant legal citations for natural-language legal questions.
 
-The **PCB Local Inspection System** is a Python-based computer-vision prototype developed to compare a known-good printed circuit board with one or more inspection samples.
+The repository focuses on Swiss legal material and includes references such as:
 
-The system is designed for local execution and does not require cloud services, model training, or an external AI API. It uses a fixed reference image, aligns each inspected PCB image to that reference, calculates visual differences, identifies suspicious regions, and generates inspection outputs for manual review.
+Federal statutory provisions, for example Art. 221 Abs. 1 StPO
 
-The current prototype supports both the **front** and **back** sides of a PCB and focuses on three visible defect categories:
+Civil Code provisions, for example Art. 8 ZGB
 
-* Scratches
-* Missing components or major visual mismatches
-* Dent-like or blob-like defects
+Code of Obligations provisions, for example Art. 41 Abs. 1 OR
 
-The project demonstrates the core workflow required for a reference-based automated visual inspection system.
+Federal Supreme Court decisions, for example BGE 137 IV 122 E. 6.2
 
-```text
-Reference PCB
-     +
-Inspection Image
-     ↓
-Image Normalization
-     ↓
-Reference Alignment
-     ↓
-Difference Analysis
-     ↓
-Defect Detection
-     ↓
-Annotated Inspection Outputs
-```
+Individual decision references, for example 1B_210/2023 E. 4.1
 
----
+CITADREX approaches citation prediction as a ranking problem. Given a detailed legal question, the system generates an ordered list of legal authorities that may be relevant to that question.
 
-## 2. Project Purpose
+Legal question → Candidate generation → Citation ranking → Predicted legal references
 
-PCB manufacturing and assembly processes require consistent visual quality checks. Manual inspection can become slow and inconsistent when a large number of boards must be reviewed or when defects are small and difficult to identify.
+The project is intended for retrieval research, ranking experiments, and manual result analysis. It is not a legal-advice system and should not be used as a substitute for professional legal review.
 
-This project was created to explore a lightweight inspection process that can:
+🎯 Project Objective
 
-* Compare a PCB against a known-good reference
-* Detect visually changed regions
-* Categorize suspicious areas using geometric rules
-* Produce reusable visual evidence
-* Generate text-based inspection records
-* Operate fully on a local computer
+Legal research is more complex than ordinary keyword search.
 
-The system is intended as a **prototype and engineering demonstration**. It is not currently a replacement for a certified industrial Automated Optical Inspection system.
+A single legal question may involve:
 
----
+Multiple statutes
 
-## 3. Inspection Scope
+Different procedural and substantive rules
 
-### Supported Inspection Sides
+Abbreviated legal references
 
-The project maintains separate workflows for:
+Citations to previous judgments
 
-```text
-Front-side PCB inspection
-Back-side PCB inspection
-```
+Repeated legal terminology
 
-Each side uses its own reference image and its own set of inspection samples.
+Context-dependent relevance
 
-### Supported Image Formats
+Relationships between authorities that are not obvious from lexical similarity alone
 
-The inspection pipeline accepts:
+The goal of CITADREX is to explore whether lightweight retrieval techniques can identify useful citations by combining:
 
-* `.jpg`
-* `.jpeg`
-* `.png`
-* `.bmp`
-* `.tif`
-* `.tiff`
-* `.webp`
+Query-text similarity
 
-### Maximum Processing Dimension
+Law-text similarity
 
-Images larger than the configured maximum dimension are resized while preserving their aspect ratio.
+Citation-frequency signals
 
-```python
-MAX_DIM = 1600
-```
+Co-citation relationships
 
----
+Nearest-neighbor transfer
 
-## 4. Core Capabilities
+Ranking heuristics
 
-### Reference-Based Comparison
+Adaptive output-length selection
 
-The system uses the first valid image found in each reference folder as the known-good PCB image.
+Human review and manual correction
 
-Every defective or inspection image is compared against this reference.
+🔎 Retrieval Task
 
-### Image Alignment
+Input
 
-Before difference detection, the inspected PCB is aligned with the reference using OpenCV's Enhanced Correlation Coefficient method.
+A legal question represented by a unique query identifier:
 
-The alignment process uses:
+query_id,query
+test_001,"A detailed legal question..."
 
-* Grayscale image conversion
-* Affine transformation
-* ECC optimization
-* Resize-only fallback when alignment fails
+Output
 
-### Multi-Detector Inspection
+An ordered, semicolon-separated citation list:
 
-Three separate rule-based detectors are executed for every PCB image:
+query_id,predicted_citations
+test_001,Art. 10 Abs. 2 URG;Art. 2 UWG;Art. 17 IPRG
 
-| Detector                   | Intended defect                  | Main technique                                       |
-| -------------------------- | -------------------------------- | ---------------------------------------------------- |
-| Scratch detector           | Narrow line-like damage          | Difference image, Canny edges, Hough lines           |
-| Missing-component detector | Large missing or changed regions | Thresholded image difference and contour analysis    |
-| Dent/blob detector         | Compact irregular defects        | Morphology, contour area, and aspect-ratio filtering |
+Expected Behaviour
 
-### Batch Operation
+For each query, the retrieval system should:
 
-The runner processes all valid images placed in the front and back defective-image folders.
+Understand the legal issue expressed in the query
 
-### Local Output Generation
+Generate a broad set of candidate citations
 
-The system generates inspection evidence without uploading files to any external service.
+Score candidates using available retrieval signals
 
----
+Rank the candidates
 
-## 5. System Architecture
+Select an appropriate number of citations
 
-```mermaid
-flowchart LR
-    RI["Reference PCB Image"] --> PRE["Image Normalization"]
-    DI["Inspection PCB Image"] --> PRE2["Image Normalization"]
+Export the final predictions in submission format
 
-    PRE --> ALIGN["ECC Affine Alignment"]
-    PRE2 --> ALIGN
+🧠 Retrieval Pipeline
 
-    ALIGN --> SD["Scratch Detection"]
-    ALIGN --> MD["Missing / Mismatch Detection"]
-    ALIGN --> DD["Dent / Blob Detection"]
+The execution log documents the following experimental pipeline.
 
-    SD --> RESULT["Combined Inspection Results"]
-    MD --> RESULT
-    DD --> RESULT
-
-    RESULT --> AN["Annotated PCB"]
-    RESULT --> MASK["Binary Mask"]
-    RESULT --> HEAT["Defect Heatmap"]
-    RESULT --> CROP["Defect Crops"]
-    RESULT --> REPORT["Text Report"]
-```
-
----
-
-## 6. Operating Workflow
-
-```mermaid
 flowchart TD
-    A["Start"] --> B["Load reference image"]
-    B --> C["Load inspection image"]
-    C --> D["Normalize image dimensions"]
-    D --> E["Align image to reference"]
-    E --> F["Run scratch detector"]
-    E --> G["Run missing-component detector"]
-    E --> H["Run dent/blob detector"]
+    A["Training, validation and test queries"] --> B["Text preprocessing"]
+    C["German law corpus"] --> D["Law-text index"]
+    E["Court citation corpus"] --> F["Court citation index"]
 
-    F --> I["Combine detections"]
-    G --> I
-    H --> I
+    B --> G["Query TF-IDF matrices"]
+    D --> H["Law-text TF-IDF matrices"]
+    F --> I["Citation candidates"]
 
-    I --> J["Draw bounding boxes"]
-    I --> K["Create combined mask"]
-    I --> L["Create heatmap"]
-    I --> M["Crop detected regions"]
-    I --> N["Generate report"]
+    E --> J["Co-citation graph"]
+    A --> K["Nearest-neighbor query matching"]
 
-    J --> O{"More inspection images?"}
-    K --> O
-    L --> O
-    M --> O
-    N --> O
+    G --> L["Candidate scoring"]
+    H --> L
+    I --> L
+    J --> L
+    K --> L
 
-    O -- Yes --> C
-    O -- No --> P["Inspection Complete"]
-```
+    L --> M["Ranked citation candidates"]
+    M --> N["Fixed-k evaluation"]
+    M --> O["Adaptive-k evaluation"]
+    N --> P["Strategy selection"]
+    O --> P
 
----
+    P --> Q["Test-query predictions"]
+    Q --> R["Submission CSV files"]
+    Q --> S["Review and override artifacts"]
 
-## 7. Detection Logic
+1. Data Loading
 
-### 7.1 Scratch Detection
+The experiment loads:
 
-The scratch detector identifies narrow and elongated changes between the reference image and the inspected PCB.
+Training queries
 
-The process includes:
+Validation queries with gold citations
 
-1. Convert both images to grayscale
-2. Calculate absolute image difference
-3. Apply Gaussian blur
-4. Run Canny edge detection
-5. Dilate edge regions
-6. Detect line segments using `HoughLinesP`
-7. Filter short and unsuitable line angles
-8. Extract elongated contours
-9. Create scratch bounding boxes
+Test queries
 
-This approach is suitable for visible linear differences but may also react to edges caused by lighting or alignment changes.
+A German-language law corpus
 
----
+Court citation identifiers and citation text
 
-### 7.2 Missing Component or Major Mismatch Detection
+2. Corpus Construction
 
-This detector focuses on large visual differences.
+The recorded run processed multiple court-data chunks and reported a final corpus size of:
 
-The process includes:
+2,161,111 records
 
-1. Convert both images to grayscale
-2. Calculate absolute image difference
-3. Apply Gaussian smoothing
-4. Apply binary thresholding
-5. Remove noise using morphological opening
-6. Connect nearby regions using morphological closing
-7. Extract contours
-8. Filter regions using area and bounding-box dimensions
+3. Co-Citation Graph
 
-This detector may identify:
+A co-citation graph is built to model relationships between legal authorities that appear together.
 
-* Missing components
-* Displaced components
-* Major surface changes
-* Large alignment differences
+This allows the system to use citation structure in addition to direct text similarity.
 
----
+4. Law Indices
 
-### 7.3 Dent or Blob-Like Detection
+The pipeline builds searchable indices for legal provisions and court references.
 
-This detector identifies compact and irregular difference regions.
+5. TF-IDF Representation
 
-The process includes:
+The experiment creates:
 
-1. Calculate the grayscale difference
-2. Smooth the difference image
-3. Apply a lower binary threshold
-4. Clean the result using morphology
-5. Extract contours
-6. Filter very small and very large regions
-7. Remove highly elongated regions
-8. Save compact suspicious areas as dent/blob candidates
+Query TF-IDF matrices
 
----
+Law-text TF-IDF matrices
 
-## 8. Output Package
+These representations provide lightweight lexical matching between questions and legal material.
 
-Each inspected image can produce five output types.
+6. Nearest-Neighbor Transfer
 
-### Annotated Image
+The system evaluates whether citations associated with similar validation or training queries can be transferred to a new query.
 
-The aligned PCB image is saved with labeled bounding boxes.
+The run tested threshold pairs for high- and medium-confidence nearest-neighbor copying.
 
-| Defect type                        | Box color |
-| ---------------------------------- | --------- |
-| Scratch                            | Red       |
-| Missing component / major mismatch | Blue      |
-| Dent / blob-like defect            | Orange    |
+7. Candidate Ranking
 
-### Binary Mask
+Candidate citations are combined and ranked using the available retrieval signals.
 
-All detector masks are combined into a single binary image.
+The repository does not currently include the source notebook, so the exact score formula and feature weights cannot be verified from the committed files.
 
-### Heatmap
+8. Output-Length Selection
 
-The combined defect mask is converted into a color heatmap using OpenCV's JET color map.
+The pipeline compares two approaches:
 
-### Defect Crops
+Fixed-k: return the same number of citations for every query
 
-Each suspicious region is cropped with padding for detailed review.
+Adaptive-k: vary the number of citations according to query-level ranking behaviour
 
-### Text Report
+📊 Experiment Results
 
-The report contains:
+The committed execution log records validation over 10 validation queries.
 
-* Source image name
-* PCB side
-* Alignment method and status
-* Total number of detections
-* Detection type
-* Geometric score
-* Bounding-box coordinates
+Nearest-Neighbor Threshold Sweep
 
-Example:
+High threshold
 
-```text
-Image: pcb_front_01.png
-Side: front
-Alignment: {'method': 'ecc', 'ok': True}
-Total defects: 3
+Medium threshold
 
-Defect #1
-  Type : scratch
-  Score: 170.0
-  BBox : (250, 522, 46, 12)
-```
+Validation F1@8
 
-> The score represents contour area. It is not a prediction confidence value.
+0.80
 
----
+0.60
 
-## 9. Repository Structure
+0.1667
 
-```text
-PCB_LOCAL_INSPECTION/
+0.75
+
+0.55
+
+0.1667
+
+0.70
+
+0.50
+
+0.1667
+
+0.65
+
+0.50
+
+0.1667
+
+0.60
+
+0.45
+
+0.1667
+
+Selected thresholds:
+
+high = 0.80
+medium = 0.60
+
+Fixed-k Validation
+
+k
+
+Validation F1
+
+2
+
+0.0938
+
+3
+
+0.1167
+
+5
+
+0.1411
+
+6
+
+0.1533
+
+8
+
+0.1667
+
+10
+
+0.1793
+
+12
+
+0.1802
+
+15
+
+0.1804
+
+20
+
+0.1712
+
+25
+
+0.1821
+
+30
+
+0.1739
+
+Selected Strategy
+
+Strategy
+
+Validation F1
+
+Best fixed-k (k=25)
+
+0.1821
+
+Adaptive selection
+
+0.2012
+
+The recorded run selected the adaptive strategy and generated predictions for 40 test queries.
+
+These scores come from a very small validation set and should be treated as experimental indicators rather than production-level performance estimates.
+
+📂 Repository Structure
+
+citadrex-legal-ir/
 │
-├── input/
-│   ├── reference/
-│   │   ├── front/
-│   │   └── back/
-│   │
-│   └── defective/
-│       ├── front/
-│       └── back/
+├── INPUT/
+│   ├── court_consideration example.txt
+│   ├── laws_de.7z
+│   ├── sample_submission.csv
+│   ├── train.csv
+│   ├── val.csv
+│   └── test.csv
 │
-├── output/
-│   ├── annotated/
-│   ├── masks/
-│   ├── heatmaps/
-│   ├── crops/
-│   └── reports/
+├── OUTPUT/
+│   ├── candidate_long.csv
+│   ├── manual_overrides_template.csv
+│   ├── output.png
+│   ├── review_pack.csv
+│   ├── submission.csv
+│   ├── submission_adaptive.csv
+│   ├── submission_k5.csv
+│   ├── submission_k8.csv
+│   ├── submission_k10.csv
+│   └── submission_k12.csv
 │
-├── scripts/
-│   ├── config.py
-│   ├── utils.py
-│   ├── preprocess.py
-│   ├── align.py
-│   ├── detect_classical.py
-│   └── run_inspection.py
+├── LOG/
+│   └── citadrex-t1.log
 │
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
+└── README.md
 
-### Module Responsibilities
+🗃️ Repository Artifacts
 
-| File                  | Responsibility                                                           |
-| --------------------- | ------------------------------------------------------------------------ |
-| `config.py`           | Project paths, valid image formats, output locations, maximum image size |
-| `utils.py`            | Folder creation, image listing, image loading, resizing, text saving     |
-| `preprocess.py`       | Image normalization, grayscale conversion, board-mask helper             |
-| `align.py`            | ECC affine alignment and fallback handling                               |
-| `detect_classical.py` | Scratch, mismatch, and dent/blob detectors                               |
-| `run_inspection.py`   | Complete front and back batch inspection workflow                        |
+Input Files
 
----
+File
 
-## 10. Technology Stack
+Purpose
 
-| Layer                  | Technology                           |
-| ---------------------- | ------------------------------------ |
-| Language               | Python                               |
-| Computer vision        | OpenCV                               |
-| Numerical operations   | NumPy                                |
-| Image utilities        | Pillow                               |
-| Configuration library  | PyYAML                               |
-| Progress utility       | tqdm                                 |
-| Processing environment | Local machine                        |
-| Detection type         | Classical rule-based computer vision |
-| Trained model          | Not required                         |
+court_consideration example.txt
 
----
+Example citation-and-text representation from court material
 
-## 11. Installation
+laws_de.7z
 
-### Prerequisites
+Compressed German-language legal corpus
 
-* Python 3.x
-* `pip`
-* Git
-* Reference and inspection images captured under similar conditions
+train.csv
 
-### Clone the Repository
+Training data used by the retrieval experiment
 
-```bash
-git clone https://github.com/Nithish-code17/PCB_LOCAL_INSPECTION.git
-cd PCB_LOCAL_INSPECTION
-```
+val.csv
 
-### Create a Virtual Environment
+Validation queries with gold citation lists
 
-#### Windows
+test.csv
 
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
+Test queries requiring citation predictions
 
-#### Linux or macOS
+sample_submission.csv
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+Required output-column example
 
-### Install Dependencies
+Output Files
 
-```bash
-pip install -r requirements.txt
-```
+File
 
----
+Purpose
 
-## 12. Input Preparation
+submission.csv
 
-Place the known-good images inside:
+Selected final prediction file
 
-```text
-input/reference/front/
-input/reference/back/
-```
+submission_adaptive.csv
 
-Place inspection samples inside:
+Predictions produced by adaptive output selection
 
-```text
-input/defective/front/
-input/defective/back/
-```
+submission_k5.csv
 
-Example:
+Fixed top-5 citation predictions
 
-```text
-input/
-├── reference/
-│   ├── front/
-│   │   └── reference_front.png
-│   └── back/
-│       └── reference_back.png
-│
-└── defective/
-    ├── front/
-    │   ├── inspection_front_01.png
-    │   └── inspection_front_02.png
-    └── back/
-        └── inspection_back_01.png
-```
+submission_k8.csv
 
-The reference and inspected images should have:
+Fixed top-8 citation predictions
 
-* Similar camera angle
-* Similar distance
-* Similar lighting
-* Similar orientation
-* Stable PCB placement
-* Minimal reflections and shadows
+submission_k10.csv
 
----
+Fixed top-10 citation predictions
 
-## 13. Running the Inspection
+submission_k12.csv
 
-From the project root, run:
+Fixed top-12 citation predictions
 
-```bash
-python scripts/run_inspection.py
-```
+manual_overrides_template.csv
 
-Example console output:
+Template for manually replacing predictions
 
-```text
-[INFO] Processing front: inspection_front_01.png
-[INFO] Processing front: inspection_front_02.png
-[INFO] Processing back: inspection_back_01.png
-[DONE] Inspection complete.
-```
+candidate_long.csv
 
-The project automatically creates the required output folders.
+Candidate-level analysis artifact
 
----
+review_pack.csv
 
-## 14. Generated File Naming
+Review-oriented inspection artifact
 
-For:
+output.png
 
-```text
-input/defective/front/inspection_front_01.png
-```
+Saved visual output from the experiment
 
-the main outputs are:
+Log File
 
-```text
-output/annotated/front_inspection_front_01_annotated.png
-output/masks/front_inspection_front_01_mask.png
-output/heatmaps/front_inspection_front_01_heatmap.png
-output/reports/front_inspection_front_01_report.txt
-```
+LOG/citadrex-t1.log records:
 
-Defect crops are stored inside:
+Corpus loading
 
-```text
-output/crops/
-```
+Court-data chunk processing
 
----
+Index construction
 
-## 15. Recommended Inspection Conditions
+Threshold sweeping
 
-For stable output:
+Fixed-k validation
 
-* Mount the camera in a fixed position
-* Use controlled lighting
-* Keep the board orientation consistent
-* Use a plain background
-* Avoid reflections from solder and metal surfaces
-* Use a high-quality reference PCB
-* Keep the same resolution across samples
-* Avoid motion blur
-* Calibrate thresholds for each PCB design
+Adaptive strategy evaluation
 
----
+Test-query scoring
 
-## 16. Current Limitations
+Exported file paths
 
-The current prototype has the following limitations:
+Total execution timing
 
-* Detection depends on fixed thresholds.
-* Lighting variation can produce false positives.
-* Small alignment errors can create large difference regions.
-* The same physical defect may be detected by multiple detectors.
-* Detection results are not merged using non-maximum suppression.
-* There is no trained classifier or segmentation model.
-* There is no measured precision, recall, or accuracy score.
-* The system uses the first valid reference image in each folder.
-* Crop filenames can be overwritten during batch processing.
-* The existing board-mask function is not applied in the main runner.
-* The project has no graphical operator interface.
-* The system is not calibrated for multiple PCB designs automatically.
+🔁 Human-in-the-Loop Review
 
----
+CITADREX includes a manual override template with the following structure:
 
-## 17. Industrial Development Roadmap
+query_id,query,manual_predicted_citations
+test_001,"A detailed legal question...",
 
-To move toward a more production-oriented system:
+This supports a review process where a legal researcher can:
 
-* [ ] Introduce controlled image-capture hardware
-* [ ] Add camera calibration and perspective correction
-* [ ] Apply PCB-region masking before difference analysis
-* [ ] Merge overlapping detections
-* [ ] Add severity and defect-priority levels
-* [ ] Add source-safe crop filenames
-* [ ] Create CSV and PDF inspection reports
-* [ ] Build a Streamlit or desktop operator interface
-* [ ] Add configurable detector parameters
-* [ ] Add SSIM and feature-based comparison
-* [ ] Create a labeled PCB defect dataset
-* [ ] Train a YOLO or segmentation model
-* [ ] Measure precision, recall, false-positive rate, and processing speed
-* [ ] Add pass/fail decision rules
-* [ ] Integrate live camera inspection
+Inspect the original question
 
----
+Review the machine-generated predictions
 
-## 18. Privacy and Deployment
+Compare alternative top-k outputs
 
-The system processes PCB images locally.
+Replace weak or incorrect citations
 
-The current implementation:
+Export a corrected final prediction set
 
-* Does not send images to a cloud API
-* Does not require online model inference
-* Does not require user authentication
-* Stores inspection evidence on the local file system
+flowchart LR
+    A["Machine predictions"] --> B["Review candidate citations"]
+    B --> C{"Prediction acceptable?"}
+    C -- Yes --> D["Keep prediction"]
+    C -- No --> E["Add manual override"]
+    D --> F["Final citation list"]
+    E --> F
 
-Before industrial use, access control, audit logging, storage retention, and secure operator workflows should be added.
+🛠️ Methods Represented in the Experiment
 
----
+Based on the committed run log and generated artifacts, the project uses or evaluates:
 
-## 19. Author
+Legal text normalization
+
+TF-IDF vectorization
+
+Lexical similarity
+
+Query nearest-neighbor retrieval
+
+Co-citation graph construction
+
+Law and court-citation indexing
+
+Candidate generation
+
+Heuristic ranking
+
+Threshold calibration
+
+Fixed top-k selection
+
+Adaptive top-k selection
+
+F1-based validation
+
+Manual override workflow
+
+⚠️ Current Repository Status
+
+This repository currently stores the datasets, generated outputs, execution log, and experiment documentation.
+
+It does not currently include:
+
+The executable Python script
+
+The original notebook
+
+A requirements.txt file
+
+An environment specification
+
+Automated tests
+
+A command-line interface
+
+A web interface
+
+A software license
+
+Because the source pipeline is not committed, the experiment cannot currently be reproduced directly from this repository.
+
+To Make the Project Reproducible
+
+Add:
+
+src/
+├── preprocess.py
+├── build_indices.py
+├── retrieve.py
+├── evaluate.py
+└── export.py
+
+notebooks/
+└── citadrex_experiment.ipynb
+
+requirements.txt
+LICENSE
+
+Then document a runnable command such as:
+
+python -m src.retrieve
+
+Only add that command after the corresponding executable code exists.
+
+⚠️ Current Limitations
+
+The executable ranking implementation is missing from the repository.
+
+Exact ranking weights and candidate-merging rules cannot be verified.
+
+Validation contains only 10 labelled queries.
+
+The reported metric may vary considerably on a larger evaluation set.
+
+Query text and legal corpus language may differ, reducing lexical matching quality.
+
+TF-IDF cannot fully capture legal reasoning or semantic equivalence.
+
+High-frequency citations can dominate heuristic ranking.
+
+Nearest-neighbor transfer can repeat irrelevant citations from superficially similar questions.
+
+Large top-k values may improve recall while reducing precision.
+
+candidate_long.csv and review_pack.csv are currently empty in the committed repository.
+
+Predictions may contain legally related but incorrect or incomplete authorities.
+
+Generated citations require expert legal verification.
+
+🔮 Development Roadmap
+
+Commit the original experiment notebook
+
+Convert notebook logic into reusable Python modules
+
+Add requirements.txt
+
+Add deterministic configuration and random seeds
+
+Document the exact ranking formula
+
+Add preprocessing tests
+
+Add citation-format validation
+
+Merge duplicate citation variants
+
+Add BM25 retrieval
+
+Add multilingual sentence embeddings
+
+Add cross-encoder reranking
+
+Add graph-based citation propagation
+
+Evaluate precision, recall, MAP, MRR, and nDCG
+
+Expand the validation dataset
+
+Add error-analysis notebooks
+
+Build an interactive citation-review interface
+
+Add model and dataset cards
+
+Add a project license
+
+⚖️ Responsible Use
+
+CITADREX is a research and experimentation project.
+
+Its outputs:
+
+May contain incorrect citations
+
+May omit controlling legal authority
+
+May rank outdated or contextually irrelevant provisions
+
+Must be reviewed by a qualified legal professional
+
+Must not be treated as legal advice
+
+Users are responsible for checking the licensing and usage terms of every included dataset and legal corpus.
+
+👨‍💻 Author
 
 <div align="center">
 
-### Nithish Sarwin
+Nithish Sarwin
 
-Artificial Intelligence & Machine Learning Student
-Java and Backend Developer
+Artificial Intelligence & Machine Learning StudentJava and Backend Developer
 
-[GitHub](https://github.com/Nithish-code17) ·
-[LinkedIn](https://linkedin.com/in/nithishsarwin) ·
-[Email](mailto:mnithishsarwin@gmail.com)
+GitHub ·LinkedIn ·Email
 
 </div>
 
----
-
 <div align="center">
 
-**Local visual inspection for early PCB defect-analysis research and prototyping.**
+Exploring transparent and reviewable retrieval methods for legal citation discovery.
 
 </div>
