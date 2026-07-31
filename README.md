@@ -2,273 +2,192 @@
 
 ⚖️ CITADREX
 
-Citation-Aware Legal Information Retrieval
+Legal Citation Retrieval Engine
 
-An experimental retrieval pipeline for mapping complex legal questions to relevant Swiss statutes, court decisions, and legal references.
+Retrieving relevant Swiss legal provisions and court references from complex legal questions.
 
 <p>
-  <img src="https://img.shields.io/badge/Domain-Legal%20Information%20Retrieval-1F2937?style=for-the-badge" alt="Legal Information Retrieval" />
-  <img src="https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Approach-TF--IDF%20%2B%20Co--citation-7C3AED?style=for-the-badge" alt="TF-IDF and Co-citation" />
-  <img src="https://img.shields.io/badge/Status-Experimental-D97706?style=for-the-badge" alt="Experimental" />
+  <img src="https://img.shields.io/badge/Legal%20Tech-Information%20Retrieval-111827?style=for-the-badge" alt="Legal Tech" />
+  <img src="https://img.shields.io/badge/Python-Research%20Pipeline-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Retrieval-TF--IDF%20%2B%20Co--Citation-6D28D9?style=for-the-badge" alt="Retrieval" />
+  <img src="https://img.shields.io/badge/Status-Experimental-F59E0B?style=for-the-badge" alt="Experimental" />
 </p>
 
-Overview •Retrieval Task •Pipeline •Results •Repository •Limitations
+<p>
+  <a href="#overview">Overview</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="#experiment-results">Results</a> •
+  <a href="#repository-contents">Repository</a> •
+  <a href="#project-status">Status</a>
+</p>
 
 </div>
 
-📌 Overview
+Overview
 
-CITADREX is an experimental legal information-retrieval project designed to predict relevant legal citations for natural-language legal questions.
+CITADREX is an experimental legal information-retrieval system that predicts relevant legal citations for long-form legal questions.
 
-The repository focuses on Swiss legal material and includes references such as:
+The project works with Swiss legal material and attempts to retrieve references such as:
 
-Federal statutory provisions, for example Art. 221 Abs. 1 StPO
+Art. 221 Abs. 1 StPO
+Art. 41 Abs. 1 OR
+Art. 8 ZGB
+BGE 137 IV 122 E. 6.2
+1B_210/2023 E. 4.1
 
-Civil Code provisions, for example Art. 8 ZGB
+Rather than generating a legal answer, CITADREX focuses on a narrower retrieval task:
 
-Code of Obligations provisions, for example Art. 41 Abs. 1 OR
+Given a legal problem, which statutes, provisions, and court decisions are most likely to be relevant?
 
-Federal Supreme Court decisions, for example BGE 137 IV 122 E. 6.2
+The system combines lexical retrieval, citation relationships, nearest-neighbor matching, ranking heuristics, and adaptive result selection.
 
-Individual decision references, for example 1B_210/2023 E. 4.1
+Problem Statement
 
-CITADREX approaches citation prediction as a ranking problem. Given a detailed legal question, the system generates an ordered list of legal authorities that may be relevant to that question.
+Legal questions are difficult to search because they often contain:
 
-Legal question → Candidate generation → Citation ranking → Predicted legal references
+Long factual descriptions
 
-The project is intended for retrieval research, ranking experiments, and manual result analysis. It is not a legal-advice system and should not be used as a substitute for professional legal review.
+Multiple legal issues
 
-🎯 Project Objective
+Formal legal language
 
-Legal research is more complex than ordinary keyword search.
+Procedural and substantive rules
 
-A single legal question may involve:
+Statutory abbreviations
 
-Multiple statutes
+Court citation patterns
 
-Different procedural and substantive rules
+References that are related even when the wording is different
 
-Abbreviated legal references
+A standard keyword search may miss important authorities or return a large number of irrelevant matches.
 
-Citations to previous judgments
+CITADREX explores a structured ranking pipeline that converts a legal question into a ranked list of candidate citations.
 
-Repeated legal terminology
-
-Context-dependent relevance
-
-Relationships between authorities that are not obvious from lexical similarity alone
-
-The goal of CITADREX is to explore whether lightweight retrieval techniques can identify useful citations by combining:
-
-Query-text similarity
-
-Law-text similarity
-
-Citation-frequency signals
-
-Co-citation relationships
-
-Nearest-neighbor transfer
-
-Ranking heuristics
-
-Adaptive output-length selection
-
-Human review and manual correction
-
-🔎 Retrieval Task
+Input and Output
 
 Input
-
-A legal question represented by a unique query identifier:
 
 query_id,query
 test_001,"A detailed legal question..."
 
 Output
 
-An ordered, semicolon-separated citation list:
-
 query_id,predicted_citations
 test_001,Art. 10 Abs. 2 URG;Art. 2 UWG;Art. 17 IPRG
 
-Expected Behaviour
+Each query receives an ordered list of predicted legal authorities separated by semicolons.
 
-For each query, the retrieval system should:
+How It Works
 
-Understand the legal issue expressed in the query
+flowchart LR
+    Q["Legal Question"] --> P["Text Preprocessing"]
+    P --> T["Query TF-IDF"]
 
-Generate a broad set of candidate citations
+    L["Law Corpus"] --> LI["Law Index"]
+    C["Court Citation Corpus"] --> CI["Citation Index"]
+    C --> G["Co-Citation Graph"]
 
-Score candidates using available retrieval signals
+    T --> R["Candidate Retrieval"]
+    LI --> R
+    CI --> R
+    G --> R
 
-Rank the candidates
+    R --> N["Nearest-Neighbor Signals"]
+    N --> S["Candidate Scoring"]
+    S --> K["Adaptive Top-K Selection"]
+    K --> O["Predicted Citations"]
 
-Select an appropriate number of citations
+1. Query Processing
 
-Export the final predictions in submission format
+The legal question is converted into a searchable text representation.
 
-🧠 Retrieval Pipeline
+2. Law and Citation Indexing
 
-The execution log documents the following experimental pipeline.
+The experiment builds separate retrieval structures for:
 
-flowchart TD
-    A["Training, validation and test queries"] --> B["Text preprocessing"]
-    C["German law corpus"] --> D["Law-text index"]
-    E["Court citation corpus"] --> F["Court citation index"]
+Legal provisions
 
-    B --> G["Query TF-IDF matrices"]
-    D --> H["Law-text TF-IDF matrices"]
-    F --> I["Citation candidates"]
+Court citations
 
-    E --> J["Co-citation graph"]
-    A --> K["Nearest-neighbor query matching"]
+Citation text
 
-    G --> L["Candidate scoring"]
-    H --> L
-    I --> L
-    J --> L
-    K --> L
+Query text
 
-    L --> M["Ranked citation candidates"]
-    M --> N["Fixed-k evaluation"]
-    M --> O["Adaptive-k evaluation"]
-    N --> P["Strategy selection"]
-    O --> P
+3. TF-IDF Retrieval
 
-    P --> Q["Test-query predictions"]
-    Q --> R["Submission CSV files"]
-    Q --> S["Review and override artifacts"]
+TF-IDF matrices are created for both:
 
-1. Data Loading
+Legal questions
 
-The experiment loads:
+Law text
 
-Training queries
+This provides a lightweight lexical similarity signal.
 
-Validation queries with gold citations
+4. Co-Citation Analysis
+
+A co-citation graph models legal references that frequently appear together.
+
+This helps surface authorities that may be relevant even when they do not directly match the query wording.
+
+5. Nearest-Neighbor Matching
+
+The system compares a new query with previously labelled queries and evaluates whether their citation lists can be reused as an additional ranking signal.
+
+6. Candidate Ranking
+
+Citation candidates are combined and ranked using multiple retrieval signals and heuristics.
+
+7. Adaptive Result Selection
+
+The system compares fixed output sizes with an adaptive strategy that chooses the number of returned citations based on ranking behaviour.
+
+Experiment Scale
+
+The committed execution log records:
+
+Item
+
+Value
+
+Final legal corpus size
+
+2,161,111
+
+Validation queries
+
+10
 
 Test queries
 
-A German-language law corpus
+40
 
-Court citation identifiers and citation text
+Court-data chunks processed
 
-2. Corpus Construction
+17
 
-The recorded run processed multiple court-data chunks and reported a final corpus size of:
+Selected output strategy
 
-2,161,111 records
+Adaptive
 
-3. Co-Citation Graph
+Experiment Results
 
-A co-citation graph is built to model relationships between legal authorities that appear together.
+Nearest-Neighbor Threshold Search
 
-This allows the system to use citation structure in addition to direct text similarity.
+The best recorded nearest-neighbor configuration was:
 
-4. Law Indices
+High threshold   : 0.80
+Medium threshold : 0.60
+F1@8             : 0.1667
 
-The pipeline builds searchable indices for legal provisions and court references.
+Fixed Top-K Comparison
 
-5. TF-IDF Representation
-
-The experiment creates:
-
-Query TF-IDF matrices
-
-Law-text TF-IDF matrices
-
-These representations provide lightweight lexical matching between questions and legal material.
-
-6. Nearest-Neighbor Transfer
-
-The system evaluates whether citations associated with similar validation or training queries can be transferred to a new query.
-
-The run tested threshold pairs for high- and medium-confidence nearest-neighbor copying.
-
-7. Candidate Ranking
-
-Candidate citations are combined and ranked using the available retrieval signals.
-
-The repository does not currently include the source notebook, so the exact score formula and feature weights cannot be verified from the committed files.
-
-8. Output-Length Selection
-
-The pipeline compares two approaches:
-
-Fixed-k: return the same number of citations for every query
-
-Adaptive-k: vary the number of citations according to query-level ranking behaviour
-
-📊 Experiment Results
-
-The committed execution log records validation over 10 validation queries.
-
-Nearest-Neighbor Threshold Sweep
-
-High threshold
-
-Medium threshold
-
-Validation F1@8
-
-0.80
-
-0.60
-
-0.1667
-
-0.75
-
-0.55
-
-0.1667
-
-0.70
-
-0.50
-
-0.1667
-
-0.65
-
-0.50
-
-0.1667
-
-0.60
-
-0.45
-
-0.1667
-
-Selected thresholds:
-
-high = 0.80
-medium = 0.60
-
-Fixed-k Validation
-
-k
+Top-K
 
 Validation F1
-
-2
-
-0.0938
-
-3
-
-0.1167
 
 5
 
 0.1411
-
-6
-
-0.1533
 
 8
 
@@ -298,25 +217,25 @@ Validation F1
 
 0.1739
 
-Selected Strategy
+Final Strategy
 
 Strategy
 
 Validation F1
 
-Best fixed-k (k=25)
+Best fixed strategy (k=25)
 
 0.1821
 
-Adaptive selection
+Adaptive strategy
 
 0.2012
 
-The recorded run selected the adaptive strategy and generated predictions for 40 test queries.
+The recorded run selected the adaptive strategy and generated predictions for all 40 test queries.
 
-These scores come from a very small validation set and should be treated as experimental indicators rather than production-level performance estimates.
+The validation set is small, so these results should be treated as experimental rather than conclusive.
 
-📂 Repository Structure
+Repository Contents
 
 citadrex-legal-ir/
 │
@@ -345,293 +264,250 @@ citadrex-legal-ir/
 │
 └── README.md
 
-🗃️ Repository Artifacts
+Key Files
 
-Input Files
+Input
 
 File
 
-Purpose
-
-court_consideration example.txt
-
-Example citation-and-text representation from court material
-
-laws_de.7z
-
-Compressed German-language legal corpus
+Description
 
 train.csv
 
-Training data used by the retrieval experiment
+Training query data
 
 val.csv
 
-Validation queries with gold citation lists
+Validation queries with gold citations
 
 test.csv
 
-Test queries requiring citation predictions
+Unlabelled test queries
+
+laws_de.7z
+
+Compressed German legal corpus
+
+court_consideration example.txt
+
+Example court citation and text format
 
 sample_submission.csv
 
-Required output-column example
+Required prediction format
 
-Output Files
+Output
 
 File
 
-Purpose
+Description
 
 submission.csv
 
-Selected final prediction file
+Final selected predictions
 
 submission_adaptive.csv
 
-Predictions produced by adaptive output selection
+Adaptive top-k predictions
 
 submission_k5.csv
 
-Fixed top-5 citation predictions
+Fixed top-5 predictions
 
 submission_k8.csv
 
-Fixed top-8 citation predictions
+Fixed top-8 predictions
 
 submission_k10.csv
 
-Fixed top-10 citation predictions
+Fixed top-10 predictions
 
 submission_k12.csv
 
-Fixed top-12 citation predictions
+Fixed top-12 predictions
 
 manual_overrides_template.csv
 
-Template for manually replacing predictions
-
-candidate_long.csv
-
-Candidate-level analysis artifact
+Human correction template
 
 review_pack.csv
 
-Review-oriented inspection artifact
+Review artifact
 
-output.png
+candidate_long.csv
 
-Saved visual output from the experiment
+Candidate-level artifact
 
-Log File
+Log
 
-LOG/citadrex-t1.log records:
+citadrex-t1.log records:
 
-Corpus loading
+Dataset loading
 
-Court-data chunk processing
+Corpus construction
 
-Index construction
+Co-citation graph creation
 
-Threshold sweeping
+TF-IDF index construction
 
-Fixed-k validation
+Threshold evaluation
 
-Adaptive strategy evaluation
+Fixed and adaptive top-k comparison
 
 Test-query scoring
 
-Exported file paths
+Output generation
 
-Total execution timing
+Human Review Workflow
 
-🔁 Human-in-the-Loop Review
+CITADREX includes a manual override template so machine-generated predictions can be reviewed and corrected.
 
-CITADREX includes a manual override template with the following structure:
+flowchart LR
+    A["Predicted Citations"] --> B["Legal Review"]
+    B --> C{"Accurate?"}
+    C -- Yes --> D["Approve"]
+    C -- No --> E["Manual Override"]
+    D --> F["Final Citation Set"]
+    E --> F
+
+Example format:
 
 query_id,query,manual_predicted_citations
 test_001,"A detailed legal question...",
 
-This supports a review process where a legal researcher can:
+This supports a human-in-the-loop workflow rather than treating retrieval results as automatically authoritative.
 
-Inspect the original question
+Project Status
 
-Review the machine-generated predictions
+The repository currently contains:
 
-Compare alternative top-k outputs
+Legal datasets
 
-Replace weak or incorrect citations
+Prediction outputs
 
-Export a corrected final prediction set
+Validation results
 
-flowchart LR
-    A["Machine predictions"] --> B["Review candidate citations"]
-    B --> C{"Prediction acceptable?"}
-    C -- Yes --> D["Keep prediction"]
-    C -- No --> E["Add manual override"]
-    D --> F["Final citation list"]
-    E --> F
+Experiment logs
 
-🛠️ Methods Represented in the Experiment
+Review templates
 
-Based on the committed run log and generated artifacts, the project uses or evaluates:
+Documentation
 
-Legal text normalization
+The repository does not currently include:
 
-TF-IDF vectorization
+The original executable notebook
 
-Lexical similarity
+Python source files
 
-Query nearest-neighbor retrieval
-
-Co-citation graph construction
-
-Law and court-citation indexing
-
-Candidate generation
-
-Heuristic ranking
-
-Threshold calibration
-
-Fixed top-k selection
-
-Adaptive top-k selection
-
-F1-based validation
-
-Manual override workflow
-
-⚠️ Current Repository Status
-
-This repository currently stores the datasets, generated outputs, execution log, and experiment documentation.
-
-It does not currently include:
-
-The executable Python script
-
-The original notebook
-
-A requirements.txt file
-
-An environment specification
+requirements.txt
 
 Automated tests
 
 A command-line interface
 
-A web interface
+A web application
 
-A software license
+A license
 
-Because the source pipeline is not committed, the experiment cannot currently be reproduced directly from this repository.
+Because the executable pipeline is missing, the experiment cannot currently be reproduced directly from the repository.
 
-To Make the Project Reproducible
+Reproducibility Roadmap
 
-Add:
+A future reproducible structure could use:
 
 src/
+├── data_loader.py
 ├── preprocess.py
+├── citation_parser.py
 ├── build_indices.py
-├── retrieve.py
+├── rank_candidates.py
 ├── evaluate.py
-└── export.py
+└── export_predictions.py
 
 notebooks/
 └── citadrex_experiment.ipynb
 
 requirements.txt
+config.yaml
 LICENSE
 
-Then document a runnable command such as:
+Suggested future command:
 
-python -m src.retrieve
+python -m src.rank_candidates --config config.yaml
 
-Only add that command after the corresponding executable code exists.
+This command should only be documented after the corresponding source files are added.
 
-⚠️ Current Limitations
+Current Limitations
 
-The executable ranking implementation is missing from the repository.
+The executable ranking code is not committed.
 
-Exact ranking weights and candidate-merging rules cannot be verified.
+Exact scoring weights cannot be verified.
 
-Validation contains only 10 labelled queries.
+The validation set contains only 10 queries.
 
-The reported metric may vary considerably on a larger evaluation set.
+TF-IDF depends strongly on shared wording.
 
-Query text and legal corpus language may differ, reducing lexical matching quality.
+Multilingual legal questions may reduce lexical similarity.
 
-TF-IDF cannot fully capture legal reasoning or semantic equivalence.
+Frequent citations may receive excessive ranking weight.
 
-High-frequency citations can dominate heuristic ranking.
+Similar queries can still involve different legal issues.
 
-Nearest-neighbor transfer can repeat irrelevant citations from superficially similar questions.
+Larger top-k values improve recall but may lower precision.
 
-Large top-k values may improve recall while reducing precision.
+Some output artifacts are currently empty.
 
-candidate_long.csv and review_pack.csv are currently empty in the committed repository.
+Predictions require professional legal verification.
 
-Predictions may contain legally related but incorrect or incomplete authorities.
+Future Improvements
 
-Generated citations require expert legal verification.
+Add the complete Python pipeline
 
-🔮 Development Roadmap
+Add dependency and environment files
 
-Commit the original experiment notebook
-
-Convert notebook logic into reusable Python modules
-
-Add requirements.txt
-
-Add deterministic configuration and random seeds
-
-Document the exact ranking formula
-
-Add preprocessing tests
-
-Add citation-format validation
-
-Merge duplicate citation variants
+Publish the original experiment notebook
 
 Add BM25 retrieval
 
 Add multilingual sentence embeddings
 
-Add cross-encoder reranking
+Add legal-domain reranking
 
-Add graph-based citation propagation
-
-Evaluate precision, recall, MAP, MRR, and nDCG
+Normalize duplicate citation formats
 
 Expand the validation dataset
 
-Add error-analysis notebooks
+Add MAP, MRR, recall, precision, and nDCG
 
-Build an interactive citation-review interface
+Add explainable retrieval scores
 
-Add model and dataset cards
+Build an interactive review interface
+
+Add automated citation-format checks
+
+Add dataset documentation
 
 Add a project license
 
-⚖️ Responsible Use
+Responsible Use
 
-CITADREX is a research and experimentation project.
+CITADREX is an experimental retrieval project.
 
-Its outputs:
+It does not provide legal advice, and its predictions may:
 
-May contain incorrect citations
+Be incomplete
 
-May omit controlling legal authority
+Contain incorrect authorities
 
-May rank outdated or contextually irrelevant provisions
+Miss controlling law
 
-Must be reviewed by a qualified legal professional
+Include outdated references
 
-Must not be treated as legal advice
+Require jurisdiction-specific interpretation
 
-Users are responsible for checking the licensing and usage terms of every included dataset and legal corpus.
+Every generated citation should be verified by a qualified legal professional.
 
-👨‍💻 Author
+Author
 
 <div align="center">
 
@@ -645,6 +521,6 @@ GitHub ·LinkedIn ·Email
 
 <div align="center">
 
-Exploring transparent and reviewable retrieval methods for legal citation discovery.
+Building transparent retrieval workflows for legal citation discovery.
 
 </div>
