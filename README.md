@@ -6,7 +6,7 @@ The project focuses on identifying relevant legal references from structured leg
 
 CITADREX is built as a lightweight retrieval engine for working with legal texts such as laws, court considerations, case-related records, and reference document
 
-## Overview
+## Overv
 
 Legal information retrieval is different from ordinary keyword search. Legal documents often contain citations, references, formal language, repeated terminology, and context-dependent relevance. A useful retrieval system must not only match words, but also understand how legal references, document structure, and citation patterns influence relevance.
 
