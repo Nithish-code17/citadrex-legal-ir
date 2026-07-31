@@ -4,7 +4,7 @@ CITADREX is an experimental legal information retrieval system designed for cita
 
 The project focuses on identifying relevant legal references from structured legal datasets by combining text preprocessing, citation handling, lexical similarity, candidate generation, ranking heuristics, and review-oriented output gen
 CITADREX is built as a lightweight retrievaline for workinglegal texts such as laws, court considerations, case-related records, and referenc
-Legal information retrieval is different  ordinary keyword searccuments often contain citations, references, formal language, repeated terminology, and context-dependent relevance. A useful retrievastem must not only words, but also understand how legal references, document structure, and citation patterns influence relev
+Legal information retrieval is different  ordinary keyword searccuments contain citations, references, formal language, repeated terminology, and context-dependent relevance. A useful retrievastem must not only words, but also understand how legal references, document structure, and citation patterns influence relev
 CITADREX approaches this problem through a structured retrieval pipeline. It pses legal input files, extracts useful retrieval signals, generates candidate matches, ranks those candidates, and exports multiple result files for evaluationual review, and refineme
 The system is designed to support experimentation. Multiple output variants are generated so different ranking configurations can be compared and impro
 
