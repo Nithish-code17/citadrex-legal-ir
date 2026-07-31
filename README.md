@@ -7,8 +7,7 @@ CITADREX is built as a lightweight retrieval engine for working with legal texts
 ## Ov
 Legal information retrieval is different  ordinary keyword search. Legal documents often contain citations, references, formal language, repeated terminology, and context-dependent relevance. A useful retrieval system must not only match words, but also understand how legal references, document structure, and citation patterns influence relevance.
 
-CITADREX approaches this problem through a structured retrieval pipeline. It processes legal input files, extracts useful retrieval signals, generates candidate matches, ranks those candidates, and exports multiple result files for evaluation, manual review, and refinement.
-
+CITADREX approaches this problem through a structured retrieval pipeline. It processes legal input files, extracts useful retrieval signals, generates candidate matches, ranks those candidates, and exports multiple result files for evaluation, manual review, and refineme
 The system is designed to support experimentation. Multiple output variants are generated so different ranking configurations can be compared and improved.
 
 ---
