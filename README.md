@@ -35,7 +35,7 @@ The system is designed to support experimentation. Multiple output variants are 
 
 ```text
 CITADREX/
-├── INPUT/
+├── INPU
 │   ├── court_considerations.7z
 │   ├── court_considerations.csv
 │   ├── val.csv
